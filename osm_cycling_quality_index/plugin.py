@@ -3,10 +3,11 @@ from __future__ import annotations
 from typing import Callable
 
 from qgis.PyQt.QtGui import QIcon
-from qgis.PyQt.QtWidgets import QAction, QWidget, QMessageBox
+from qgis.PyQt.QtWidgets import QAction, QWidget
 from qgis.utils import iface
 
 from osm_cycling_quality_index.extent_dialog import ExtentDialog
+from osm_cycling_quality_index.overpass import get_data
 
 
 class Plugin:
@@ -106,8 +107,9 @@ class Plugin:
 
     def run(self) -> None:
         """Run method that performs all the real work"""
-        dialog = ExtentDialog()
+        dialog = ExtentDialog(parent=iface.mainWindow())
         if dialog.exec():
-            extent = dialog.extent_groupbox.currentExtent()
-            print(extent)
+            extent = dialog.extent_groupbox.outputExtent()
+            print(get_data(extent))
+
 

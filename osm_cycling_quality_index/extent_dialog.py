@@ -2,6 +2,7 @@ from pathlib import Path
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog
 from qgis.core import QgsCoordinateReferenceSystem
+from qgis.utils import iface
 
 
 FORM_CLASS, _ = uic.loadUiType(
@@ -14,6 +15,7 @@ class ExtentDialog(QDialog, FORM_CLASS):
         super(ExtentDialog, self).__init__(parent)
         self.setupUi(self)
 
+        self.extent_groupbox.setMapCanvas(iface.mapCanvas())
         self.extent_groupbox.setOutputCrs(
             QgsCoordinateReferenceSystem("EPSG:4326"))
         
