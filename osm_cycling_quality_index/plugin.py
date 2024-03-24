@@ -6,11 +6,13 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QWidget, QMessageBox
 from qgis.utils import iface
 
+from osm_cycling_quality_index.extent_dialog import ExtentDialog
+
 
 class Plugin:
     """QGIS Plugin Implementation."""
 
-    name = "testplugin"
+    name = "OSM Cycling Quality Index"
 
     def __init__(self) -> None:
         self.actions: list[QAction] = []
@@ -104,4 +106,8 @@ class Plugin:
 
     def run(self) -> None:
         """Run method that performs all the real work"""
-        QMessageBox.information(None, "Hi", "Hallo FOSSGIS!")
+        dialog = ExtentDialog()
+        if dialog.exec():
+            extent = dialog.extent_groupbox.currentExtent()
+            print(extent)
+
